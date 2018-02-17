@@ -20,8 +20,6 @@ use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat;
 
-use CustomAlerts\Events\CustomAlertsMotdUpdateEvent;
-
 class CustomAlerts extends PluginBase {
     
 	/** @var string */
@@ -148,17 +146,6 @@ class CustomAlerts extends PluginBase {
             "MAXPLAYERS" => $this->getServer()->getMaxPlayers(),
             "TOTALPLAYERS" => count($this->getServer()->getOnlinePlayers()),
             "TIME" => date($this->cfg["datetime-format"]))));
-    }
-    
-    public function updateMotd(){
-        $cevent = new CustomAlertsMotdUpdateEvent();
-        if($this->isMotdCustom()){
-            $cevent->setMessage($this->getMotdMessage());
-        }else{
-            $cevent->setMessage($this->getServer()->getMotd());
-        }
-        $this->getServer()->getPluginManager()->callEvent($cevent);
-        $this->getServer()->getNetwork()->setName($cevent->getMessage());
     }
     
     /**
